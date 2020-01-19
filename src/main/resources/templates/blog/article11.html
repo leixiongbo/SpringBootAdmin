@@ -5,10 +5,21 @@
     <title>ajax请求json数据</title>
 </head>
 <body>
-<div id="test">11111</div>
+<div id="test"></div>
+<div>
+    <a href="#" onclick="queryDataSelect(1);">首页</a>
+    <a href="#" onclick="queryDataSelect(2);">上一页</a>
+    <a href="#" onclick="queryDataSelect(3);">下一页</a>
+    <a href="#" onclick="queryDataSelect(4);">尾页</a>
+</div>
+<div>
+    <input type="hidden" id="currentPage" value="1"/>
+    <input type="hidden" id="maxPages"/>
+</div>
 <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
 <script>
     $(function(){
+
 
         $.ajax({
             //请求方式
@@ -19,34 +30,29 @@
             dataType: "json",
             //请求成功后要执行的函数，拼接html
             success: function(data){
-
                 var str="<ul id='content'>";
                 $.each(data.result,function(i,n){
-                    // console.log("ceshi:"+JSON.stringify(n.content))
-                    var xxx =n.content+'';
-                    str+="<li id='n.id' class='tiaozhuang' data-content=JSON.stringify(n.content)>"+"ID："+n.id+"</li>";
-                    str+="<li>"+"标题："+n.title+"</li>";
-                    str+="<li>"+"地址："+n.creattime+"</li>";
+                    str+="<li id="+n.id+" style='margin-top:15px'>ID："+n.id+"";
+                    str+=""+"标题："+n.title+"";
+                    str+=""+"地址："+n.creattime+"</li>";
                 });
                 str+="</ul>";
-                $("div").append(str);
+                $("#test").append(str);
 
                 var content = $("#content").find("li");
                 content.each(function(index,e){
-                    console.log("ceshi:"+JSON.stringify(e))
-                   alert(e)
-                    var id = e.getAttribute('id');
-                    $('.'+id).on('click',function(){
-                        var content = this.getAttribute("data-content");
-                        alert("1111"+content)
-                        var  url = "articlecontent.html?content="+content;//此处拼接内容
+                    $(this).click(function(){
+                        console.log("ceshi:"+JSON.stringify(e))
+                        var  url = "articlecontent.html?id="+this.getAttribute("id");//此处拼接内容
                         window.location.href = url;
                     })
 
-                })
 
+                })
             }
         });
+
+
     });
 
 

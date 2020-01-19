@@ -15,9 +15,13 @@
         select *  from blog_show;
     </select>
 
+    <!--分页查询-->
+    <select id="selectPagingAllData" parameterType="map" resultMap="BaseResultMap">
+        select * from blog_show LIMIT #{currIndex},#{pageSize}
+    </select>
+
     <!--根据用户名获取用户信息-->
     <select id="selectAllDataById" parameterType="String" resultMap="BaseResultMap">
         select *  from blog_show where id = #{id};;
     </select>
-
 </mapper>

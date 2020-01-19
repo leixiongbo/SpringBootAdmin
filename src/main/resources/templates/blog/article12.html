@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ajax请求json数据</title>
+</head>
+<style>
+    .ssss{
+        margin:0 auto;
+        width:1000px;
+        height:100%;
+        margin-top: 50px;
+    }
+</style>
+<body>
+<div class="ssss">
+<div id="test" ></div>
+<div>
+    <a href="#" onclick="queryDataSelect(1)">首页</a>
+    <a href="#" onclick="queryDataSelect(2)">上一页</a>
+    <a href="#" onclick="queryDataSelect(3)">下一页</a>
+    <a href="#" onclick="queryDataSelect(4)">尾页</a>
+</div>
+<div>
+    <input type="hidden" id="currentPage" value="1"/>
+    <input type="hidden" id="maxPages"/>
+</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+<script>
+
+    $(function(){
+        queryDataLength();//查询总的数据长度
+        queryData(pageFlag,5);
+    });
+
+     //默认查询前5条数据
+     var maxPages =0; //总数据
+     var pageFlag = 1;//页数记录值
+        /**
+     * 根据选择执行对应的代码
+     * @param select
+     */
+    function queryDataSelect(select){
+        switch (select){
+            case 1://首页
+                pageFlag = 1;
+                queryData(pageFlag,5);
+                break;
+            case 2: //上一页
+
+                // alert(pageFlag)
+                if(pageFlag==1){
+                    alert("已经是第一页了")
+                }else {
+                    pageFlag=--pageFlag;
+                    queryData(pageFlag,5);
+                }
+
+                break;
+            case 3: //下一页
+
+                // alert(pageFlag)
+                if(pageFlag*5>=maxPages){
+                    alert("已经是最好一页了")
+                }else {
+                    pageFlag=++pageFlag;
+                    queryData(pageFlag,5);
+                }
+
+
+                break;
+            case 4: //尾页   todo 尾页需要查询所有的数据 然后总数据长度减5为起始位，小于5补0
+
+
+                if(pageFlag*5>=maxPages){
+                    alert("已经是最好一页了")
+                }else {
+                    var xx = maxPages%5
+                    var yy = (maxPages-xx)/5;
+                    // alert(yy)
+                    queryData(yy+1,5);
+                    pageFlag =yy+1
+                }
+
+
+                break;
+        }
+    }
+
+
+    /**
+     * 查询一页的信息
+     * @param pageNum
+     */
+    function queryData(startPage,endPade) {
+        $("#test").html("");
+        $.ajax({
+            //请求方式
+            type: "GET",
+            //文件位置
+            url: "http://127.0.0.1:8004/api/artilce/getPagingAllData",
+            //返回数据格式为json,也可以是其他格式如
+            dataType: "json",
+            data: {startPage: startPage, endPade: endPade},
+            //请求成功后要执行的函数，拼接html
+            success: function (data) {
+                var str = "<ul id='content'>";
+                $.each(data.result, function (i, n) {
+                    str += "<li id=" + n.id + " style='margin-top:15px'>ID：" + n.id + "";
+                    str += "" + "标题：" + n.title + "";
+                    str += "" + "地址：" + n.creattime + "</li>";
+                });
+                str += "</ul>";
+                $("#test").append(str);
+
+                var content = $("#content").find("li");
+                content.each(function (index, e) {
+                    $(this).click(function () {
+                        console.log("ceshi:" + JSON.stringify(e))
+                        var url = "articlecontent.html?id=" + this.getAttribute("id");//此处拼接内容
+                        window.location.href = url;
+                    })
+                })
+            }
+        });
+    }
+
+        /**
+         * 查询数据长度
+         * @param pageNum
+         */
+        function queryDataLength(startPage,endPade){
+            $.ajax({
+                //请求方式
+                type:"GET",
+                //文件位置
+                url:"http://127.0.0.1:8004/api/artilce/aitletitle",
+                //返回数据格式为json,也可以是其他格式如
+                dataType: "json",
+                data:{startPage:startPage,endPade:endPade},
+                //请求成功后要执行的函数，拼接html
+                success: function(data){
+                    maxPages =  data.result //一开始就查询总的数据长度
+                }
+            });
+    }
+
+
+
+</script>
+</body>
+</html>
