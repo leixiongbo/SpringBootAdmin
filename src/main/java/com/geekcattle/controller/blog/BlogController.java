@@ -42,4 +42,16 @@ public class BlogController {
         return "blog/wangeditor";
     }
 
+    //文章展示列表
+    @RequestMapping(value="/article12")
+    public String article12(){
+        return "blog/article12";
+    }
+
+
+    //文章内容展示
+    @RequestMapping(value="/articlecontent")
+    public String articlecontent(){
+        return "blog/articlecontent";
+    }
 }

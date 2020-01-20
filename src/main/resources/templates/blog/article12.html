@@ -118,7 +118,7 @@
                 content.each(function (index, e) {
                     $(this).click(function () {
                         console.log("ceshi:" + JSON.stringify(e))
-                        var url = "articlecontent.html?id=" + this.getAttribute("id");//此处拼接内容
+                        var url = "http://127.0.0.1:8004/blog/articlecontent?id=" + this.getAttribute("id");//此处拼接内容
                         window.location.href = url;
                     })
                 })
