@@ -6,20 +6,56 @@
 </head>
 <style>
     #test{
-        margin:0 auto;
-        width:1000px;
+
+        width:64%;
         height:100%;
+        float: left;
+        text-align: center;
+    }
+    #pinlun{
+        float: right;
+        width: 28%;
     }
 </style>
 <body>
-<div id="test"></div>
+<div style="margin-bottom: 150px;width: 100%;height: 700px;margin:0 auto;">
+    <div id="test">
+            adfsdfassdgsasaf
+    </div>
+<div id="pinlun">
+    <p>我是一条评论</p>
+    <p>我是一条评论</p>
+
+       </dv>
+</div>
+</div>
+<div style="margin:0 auto;width:1000px;height: 500px">
+
+    <form class="form-horizontal js-ajax-form" action="/api/artilce/releasecomment" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="picType" class="col-sm-2 control-label">发布者</label>
+            <div class="col-sm-10">
+                <input type="text" name="user" class="form-control" id="picType"/>
+            </div>
+        </div>
+        <label for="picType" class="col-sm-2 control-label">发布内容</label>
+        <div><textarea name="content"></textarea></div>
+
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default js-ajax-submit">提交</button>
+            </div>
+        </div>
+
+        <div>
+            <input hidden="hidden" id="articleid" name="articleidName">
+        </div>
+    </form>
+</div>
 <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
 <script>
-
-
-
      $(function(){
-
          var id = getQueryString("id");
         // alert(id)
          // document.getElementById("test").innerHTML=content;
@@ -33,7 +69,8 @@
             data:{id:id},
             //请求成功后要执行的函数，拼接html
             success: function(data){
-                 var str=data.result;
+                 var str=data.result.content;
+                var id=data.result.id;
                  console.log(str)
                 // $.each(data.result,function(i,n){
                 //     str+="<li><a>"+"ID："+n.id+"</a></li>";
@@ -43,6 +80,8 @@
                 // str+="</ul>";
 
                 $("#test").append(str);
+                $("#articleid").val(id);
+
             }
         });
      });

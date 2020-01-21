@@ -8,6 +8,7 @@
         <result column="creattime" jdbcType="DATE" property="creattime" />
         <result column="zan" jdbcType="VARCHAR" property="zan" />
         <result column="updatastatu" jdbcType="VARCHAR" property="updatastatu" />
+        <result column="userid" jdbcType="VARCHAR" property="userid" />
     </resultMap>
 
     <!--根据用户名获取用户信息-->

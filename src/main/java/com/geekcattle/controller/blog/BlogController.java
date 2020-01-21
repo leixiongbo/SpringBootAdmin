@@ -48,7 +48,6 @@ public class BlogController {
         return "blog/article12";
     }
 
-
     //文章内容展示
     @RequestMapping(value="/articlecontent")
     public String articlecontent(){

@@ -321,6 +321,10 @@ public class PicShowController {
     public ModelAndView  aticleShow(HttpServletRequest request, HttpServletResponse response) {
         System.out.print("title:" + request.getParameter("title"));
         System.out.print("content:" + request.getParameter("content"));
+//        HttpSession session = request.getSession();
+
+        Integer userId = (Integer) request.getSession().getAttribute("userId");
+
         ModelAndView mav=new ModelAndView("blog/shuaxinyemian");
         mav.addObject("title",request.getParameter("title"));
         mav.addObject("content", request.getParameter("content"));
@@ -330,6 +334,9 @@ public class PicShowController {
         lifeShare.setContent(request.getParameter("content"));
         lifeShare.setCreattime(DateUtil.getCurrentTime());
         lifeShare.setZan("55");
+       if(userId!=null){
+           lifeShare.setUserId(String.valueOf(userId));
+       }
         lifeShare.setUpdatastatu("1");
         lifeShareMapper.insert(lifeShare);
 

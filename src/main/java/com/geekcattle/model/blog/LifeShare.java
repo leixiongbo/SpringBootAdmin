@@ -10,6 +10,15 @@ public class LifeShare {
     private   String creattime;
     private   String zan;
     private   String updatastatu;
+    private  String userid;
+
+    public String getUserId() {
+        return userid;
+    }
+
+    public void setUserId(String userId) {
+        this.userid = userId;
+    }
 
     public String getId() {
         return id;
